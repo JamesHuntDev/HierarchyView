@@ -52,11 +52,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     private int clickedViewHeight;
 
 
-
     private HashSet<Integer> active;
-
-    int numStarted = 0;
-    int numStopped = 0;
 
     public HierarchyView(Context context) {
         super(context);
@@ -137,6 +133,8 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     private void collapseNormal() {
 
+
+        int max = Math.max(expandStopHeight, getHeight());
         if (active.contains(IS_EXPANDING) && clickY > previousClickY && previousClickY != 0) {
 
             scrollWithoutExpand = true;
@@ -153,30 +151,37 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
             int currentDiff = collapseCurrentHeight - expandCurrentHeight;
             int endClickY = clickY + beginningDiff;
 
-            if (clickY + currentDiff < endClickY) {
+            //if(clickY + currentDiff < getScrollY() + clickedViewHeight) {
 
-                int left = clickY + currentDiff;
-                int right = getScrollY() + clickedViewHeight;
-                int scrollY = getScrollY();
 
-                if(clickY + currentDiff < getScrollY() + clickedViewHeight) {
+            int left = clickY - collapseStartHeight + collapseCurrentHeight;
+            int right = getScrollY() + clickedViewHeight;
+            int scrollY = getScrollY();
 
-                    int position = stopCollapseScrollHeight - (scrollStopCollapseHeight - collapseCurrentHeight);
+            int position = stopCollapseScrollHeight - (scrollStopCollapseHeight - collapseCurrentHeight);
 
-                    scrollTo(0, position);
-                    Log.d("test", "test");
-                } else {
-                    scrollStopCollapseHeight = collapseCurrentHeight;
-                    stopCollapseScrollHeight = getScrollY();
-                }
+            //boolean goUp = position + Math.max(expandStopHeight,getHeight()) >= scrollY + collapseCurrentHeight + Math.min(expandStopHeight,getHeight()) - expandCurrentHeight + collapseCurrentHeight;
+
+            //boolean goUp = position + Math.min(expandStopHeight, getHeight()) <= clickY + Math.min(expandStopHeight, getHeight()) - collapseCurrentHeight - clickedViewHeight;
+
+            if (left < right) {
+
+
+                scrollTo(0, position);
+                Log.d("test", "test");
+            } else {
+                scrollStopCollapseHeight = collapseCurrentHeight;
+                stopCollapseScrollHeight = getScrollY();
             }
 
-        } else if(!active.contains(IS_EXPANDING)) {
+        } else if (!active.contains(IS_EXPANDING)) {
             Log.d("test", "collapse without expand");
-            if(scrollWithoutExpand) {
+            if (scrollWithoutExpand) {
 
-                int position = stopCollapseScrollHeight - (scrollStopCollapseHeight - collapseCurrentHeight);
-                scrollTo(0, position);
+                /*int position = stopCollapseScrollHeight - (scrollStopCollapseHeight - collapseCurrentHeight);
+                boolean goUp = position + Math.min(expandStopHeight, getHeight()) <= getScrollY() + Math.min(expandStopHeight, getHeight());
+                if(!goUp)
+                    scrollTo(0, position);*/
             }
         }
 
@@ -191,7 +196,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     private void upThenDown() {
 
-        if(active.contains(IS_COLLAPSING) && (clickY > previousClickY)){
+        if (active.contains(IS_COLLAPSING) && (clickY > previousClickY)) {
 
             state = COLLAPSE_NORMAL;
             animateScroll(state);
@@ -225,7 +230,6 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     @Override
     public void startExpand(int fullHeight) {
         Log.d("test", "start expand, scrollY:  " + getScrollY());
-        numStarted++;
         expandStopHeight = fullHeight;
 
         active.add(IS_EXPANDING);
@@ -236,9 +240,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     public void stopExpand() {
         active.remove(IS_EXPANDING);
 
-        numStopped++;
-        if (numStarted == numStopped)
-            reset();
+        reset();
     }
 
     @Override
@@ -251,7 +253,6 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     @Override
     public void startCollapse(int height, int maxTicksCollapse) {
-        numStarted++;
         collapseStartHeight = height;
         this.maxTicksCollapse = maxTicksCollapse;
 
@@ -262,9 +263,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     public void stopCollapse() {
         active.remove(IS_COLLAPSING);
 
-        numStopped++;
-        if (numStarted == numStopped)
-            reset();
+        reset();
     }
 
     @Override
@@ -281,25 +280,26 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     private void reset() {
         Log.d("test", "reset");
 
-        previousClickY = clickY;
+        if(active.size() == 0) {
 
-        collapseStartHeight = 0;
-        initialScrollY = 0;
-        collapseCurrentHeight = 0;
-        expandCurrentHeight = 0;
-        expandStopHeight = 0;
-        clickY = 0;
-        numStarted = 0;
-        numStopped = 0;
-        clickedViewHeight = 0;
+            previousClickY = clickY;
 
-        previousFrameExpandHeight = 0;
-        scrollStopCollapseHeight = 0;
-        scrollWithoutExpand = false;
-        stopCollapseScrollHeight = 0;
+            collapseStartHeight = 0;
+            initialScrollY = 0;
+            collapseCurrentHeight = 0;
+            expandCurrentHeight = 0;
+            expandStopHeight = 0;
+            clickY = 0;
+            clickedViewHeight = 0;
 
-        maxTicksCollapse = 0;
+            previousFrameExpandHeight = 0;
+            scrollStopCollapseHeight = 0;
+            scrollWithoutExpand = false;
+            stopCollapseScrollHeight = 0;
 
-        state = NONE;
+            maxTicksCollapse = 0;
+
+            state = NONE;
+        }
     }
 }

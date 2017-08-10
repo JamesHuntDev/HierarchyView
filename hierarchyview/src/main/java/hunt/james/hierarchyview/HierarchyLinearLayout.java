@@ -26,7 +26,7 @@ import hunt.james.hierarchyview.today.Presenter;
 public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContract.View, View.OnClickListener, PreComputedHeight {
 
     private int tick = 0;
-    private int maxTicks = 20;
+    private int maxTicks;
     private List<PreComputedHeight> views;
     private int closingIndex = -1;
     private int openingIndex = -1;
@@ -100,7 +100,7 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
         } else if (currentHeight >= 0 && shrinking) {
 
             if (tick == maxTicks)
-                scrollListener.startCollapse(currentHeight);
+                scrollListener.startCollapse(currentHeight, maxTicks);
 
             setMeasuredDimension(widthMeasureSpec, currentHeight);
             scrollListener.setCollapseCurrentHeight(currentHeight);
@@ -152,8 +152,6 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
 
         maxTicks = 3 * text.length;
 
-        int heightOfChildren = 0;
-
         for (String s : text) {
             HierarchyTextView textView = new HierarchyTextView(getContext());
             textView.setText(s);
@@ -161,13 +159,11 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             textView.setTextColor(ContextCompat.getColor(getContext(), color));
             textView.setPreComputedHeight(screenWidth);
-            heightOfChildren += textView.getPreComputedHeight(0);
             textView.setOnClickListener(this);
             views.add(textView);
             addView(textView);
         }
 
-        scrollListener.setHeightOfChildren(heightOfChildren);
     }
 
     @Override
@@ -224,8 +220,8 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
 
                     int clickIndex = i - numSmooth;
 
+                    scrollListener.setHeightOfClickedView(view.getHeight());
                     presenter.setScrollClickIndex(clickIndex);
-                    scrollListener.setHeightOfChildren(0);
                     scrollListener.setClickY(getHeightOfClick());
                     presenter.viewClicked(clickIndex);
                 }

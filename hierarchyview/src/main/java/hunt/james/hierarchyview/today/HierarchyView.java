@@ -5,27 +5,55 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ScrollView;
 
+import java.util.HashSet;
+
 import hunt.james.hierarchyview.HierarchyLinearLayout;
 
 /**
  * Created by James on 7/29/2017.
  */
 
-public class HierarchyView extends ScrollView implements HierarchyListener.Scroll{
+public class HierarchyView extends ScrollView implements HierarchyListener.Scroll {
 
     private HierarchyData hierarchyData;
 
+    private final int IS_EXPANDING = 1;
+    private final int IS_COLLAPSING = 2;
+
+
+    private final int NONE = 0;
+    private final int EXPAND_NORMAL = 1;
+    private final int EXPAND_UP_THEN_DOWN = 2;
+
+
+    private final int COLLAPSE_NORMAL = 3;
+    private final int BOTH_NORMAL = 4;
+
+    private int state = NONE;
+
+
     private int collapseStartHeight;
+    private int maxTicksCollapse;
 
     private int initialScrollY;
 
     private int collapseCurrentHeight, expandCurrentHeight;
+    private int previousFrameExpandHeight;
+    private int scrollStopCollapseHeight;
+    private int stopCollapseScrollHeight;
+    private boolean scrollWithoutExpand = false;
 
     private int clickY; //the y value of the element that was clicked
+    private int previousClickY;
 
     private int expandStopHeight; //height it will be when its done expanding
 
-    private int heightOfChildren;
+
+    private int clickedViewHeight;
+
+
+
+    private HashSet<Integer> active;
 
     int numStarted = 0;
     int numStopped = 0;
@@ -48,6 +76,8 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     }
 
     private void init() {
+        active = new HashSet<>();
+
         HierarchyLinearLayout hierarchyLinearLayout = new HierarchyLinearLayout(getContext(), this);
         hierarchyLinearLayout.setHierarchyData(hierarchyData);
         addView(hierarchyLinearLayout);
@@ -55,8 +85,135 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     public void scrollAndStayInPlace() {
 
-        //Log.d("same place","startCollapseHeight: "+startCollapseHeight+"       currentCollapseHeight: "+collapseCurrentHeight+"        expandCurrentHeight: "+expandCurrentHeight+"     initialScrollY: "+initialScrollY);
+        if (initialScrollY == 0) {
+            initialScrollY = getScrollY();
+        }
 
+        if (state == NONE) {
+
+
+            int viewHeight = getHeight();
+            int viewScroll = getScrollY();
+
+            if (active.contains(IS_COLLAPSING)) {
+                Log.d("active", "collapse");
+                state = COLLAPSE_NORMAL;
+
+            } else if (active.contains(IS_EXPANDING) && (clickY < previousClickY || previousClickY == 0)) {
+                Log.d("active", "expand");
+
+                if (clickY + clickedViewHeight + expandStopHeight > initialScrollY + getHeight()) {
+                    state = EXPAND_UP_THEN_DOWN;
+                }
+
+                if (clickY + clickedViewHeight + expandStopHeight <= getScrollY() + getHeight()) {
+                    state = EXPAND_NORMAL;
+                }
+
+            }
+        }
+
+        animateScroll(state);
+
+    }
+
+
+    private void animateScroll(int scrollMode) {
+
+        switch (scrollMode) {
+            case EXPAND_NORMAL:
+                expandNormal();
+
+                break;
+            case EXPAND_UP_THEN_DOWN:
+                upThenDown();
+                break;
+
+            case COLLAPSE_NORMAL:
+                collapseNormal();
+                break;
+        }
+    }
+
+    private void collapseNormal() {
+
+        if (active.contains(IS_EXPANDING) && clickY > previousClickY && previousClickY != 0) {
+
+            scrollWithoutExpand = true;
+
+            int scrollToY = clickY - collapseStartHeight + clickedViewHeight;
+            //int scrollCurrent = clickY - collapseCurrentHeight + clickedViewHeight;
+            int scrollCurrent = clickY + clickedViewHeight;
+            int scrollDiff = scrollCurrent - scrollToY;
+            int pxPerCollapseTick = scrollDiff / (maxTicksCollapse);
+
+            int distanceFromTop = clickY - initialScrollY;
+
+            int beginningDiff = expandStopHeight - collapseStartHeight;
+            int currentDiff = collapseCurrentHeight - expandCurrentHeight;
+            int endClickY = clickY + beginningDiff;
+
+            if (clickY + currentDiff < endClickY) {
+
+                int left = clickY + currentDiff;
+                int right = getScrollY() + clickedViewHeight;
+                int scrollY = getScrollY();
+
+                if(clickY + currentDiff < getScrollY() + clickedViewHeight) {
+
+                    int position = stopCollapseScrollHeight - (scrollStopCollapseHeight - collapseCurrentHeight);
+
+                    scrollTo(0, position);
+                    Log.d("test", "test");
+                } else {
+                    scrollStopCollapseHeight = collapseCurrentHeight;
+                    stopCollapseScrollHeight = getScrollY();
+                }
+            }
+
+        } else if(!active.contains(IS_EXPANDING)) {
+            Log.d("test", "collapse without expand");
+            if(scrollWithoutExpand) {
+
+                int position = stopCollapseScrollHeight - (scrollStopCollapseHeight - collapseCurrentHeight);
+                scrollTo(0, position);
+            }
+        }
+
+        previousFrameExpandHeight = expandCurrentHeight;
+        //previousFrameDiff = clickY + currentDiff;
+    }
+
+    private void expandNormal() {
+
+
+    }
+
+    private void upThenDown() {
+
+        if(active.contains(IS_COLLAPSING) && (clickY > previousClickY)){
+
+            state = COLLAPSE_NORMAL;
+            animateScroll(state);
+            return;
+        }
+
+        int right = getScrollY() + expandStopHeight;
+
+        int left = clickY + expandCurrentHeight;
+
+        boolean goUp = true;
+        if (clickY + expandCurrentHeight < getScrollY() + expandStopHeight) {
+            goUp = false;
+        }
+
+
+        if (goUp) {
+            int diff = expandCurrentHeight - previousFrameExpandHeight;
+            scrollBy(0, diff);
+        }
+
+        previousFrameExpandHeight = expandCurrentHeight;
     }
 
     @Override
@@ -64,72 +221,85 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         clickY = y;
     }
 
-    @Override
-    public void setHeightOfChildren(int height) {  //for the one expanding
-        heightOfChildren = height;
-    }
 
     @Override
     public void startExpand(int fullHeight) {
-        Log.d("test","start expand, scrollY:  "+getScrollY());
+        Log.d("test", "start expand, scrollY:  " + getScrollY());
         numStarted++;
         expandStopHeight = fullHeight;
-        expandCurrentHeight = 0;
-        initialScrollY = getScrollY();
+
+        active.add(IS_EXPANDING);
+
     }
 
     @Override
     public void stopExpand() {
-        Log.d("test","stopped expand");
+        active.remove(IS_EXPANDING);
 
         numStopped++;
-        if(numStarted == numStopped)
+        if (numStarted == numStopped)
             reset();
     }
 
     @Override
     public void setExpandCurrentHeight(int height) {
-        //Log.d("test","current height: "+height);
         expandCurrentHeight = height;
 
-        if(heightOfChildren != 0)
+        if (expandStopHeight != 0)
             scrollAndStayInPlace();
     }
 
     @Override
-    public void startCollapse(int height) {
+    public void startCollapse(int height, int maxTicksCollapse) {
         numStarted++;
         collapseStartHeight = height;
-        expandCurrentHeight = 0;
+        this.maxTicksCollapse = maxTicksCollapse;
+
+        active.add(IS_COLLAPSING);
     }
 
     @Override
     public void stopCollapse() {
-        Log.d("test","stopped collapse");
+        active.remove(IS_COLLAPSING);
 
         numStopped++;
-        if(numStarted == numStopped)
+        if (numStarted == numStopped)
             reset();
     }
 
     @Override
     public void setCollapseCurrentHeight(int height) {
         collapseCurrentHeight = height;
+        scrollAndStayInPlace();
+    }
 
-        if(heightOfChildren != 0)
-            scrollAndStayInPlace();
+    @Override
+    public void setHeightOfClickedView(int height) {
+        clickedViewHeight = height;
     }
 
     private void reset() {
-        Log.d("test","reset");
+        Log.d("test", "reset");
+
+        previousClickY = clickY;
+
         collapseStartHeight = 0;
         initialScrollY = 0;
         collapseCurrentHeight = 0;
         expandCurrentHeight = 0;
         expandStopHeight = 0;
-        heightOfChildren = 0;
         clickY = 0;
         numStarted = 0;
         numStopped = 0;
+        clickedViewHeight = 0;
+
+        previousFrameExpandHeight = 0;
+        scrollStopCollapseHeight = 0;
+        scrollWithoutExpand = false;
+        stopCollapseScrollHeight = 0;
+
+        maxTicksCollapse = 0;
+
+        state = NONE;
     }
 }

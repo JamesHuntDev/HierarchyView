@@ -15,11 +15,11 @@ public interface HierarchyListener {
         void stopExpand();
         void setExpandCurrentHeight(int height);
 
-        void startCollapse(int height);
+        void startCollapse(int height, int maxTicksCollapse);
         void stopCollapse();
         void setCollapseCurrentHeight(int height);
 
         void setClickY(int y);
-        void setHeightOfChildren(int height);
+        void setHeightOfClickedView(int height);
     }
 }

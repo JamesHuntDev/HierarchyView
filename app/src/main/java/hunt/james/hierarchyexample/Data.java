@@ -17,7 +17,9 @@ public class Data implements HierarchyDataHelper.Data {
     public Data() {
         categories = new ArrayList<>();
 
-        for(int i = 0; i < 15; i++)
+        int rand = (int)(Math.random() * 5 + 12);
+
+        for(int i = 0; i < rand; i++)
             categories.add(new Category("hehe: " + i));
     }
 

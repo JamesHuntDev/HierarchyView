@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'hierarchy-view'
+
+    publishedGroupId = 'me.jameshunt'
+    libraryName = 'HierarchyView'
+    artifact = 'hierarchy-view'
+
+    libraryDescription = 'A view to display hierarchical or categorized data'
+
+    siteUrl = 'https://github.com/JamesHuntDev/HierarchyView'
+    gitUrl = 'https://github.com/JamesHuntDev/HierarchyView.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'JamesHuntDev'
+    developerName = 'James Hunt'
+    developerEmail = 'jameshuntgithub@gmail.com'
+
+    licenseName = 'MIT License'
+    licenseUrl = 'https://github.com/JamesHuntDev/HierarchyView/blob/master/LICENSE'
+    allLicenses = ["MIT"]
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -26,6 +50,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:26.0.1'
     testCompile 'junit:junit:4.12'
 }
+
+//Add these lines to publish library to bintray. This is the readymade scripts made by github user nuuneoi to make uploading to bintray easy.
+//Place it at the end of the file
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

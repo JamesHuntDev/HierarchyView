@@ -3,7 +3,7 @@ package hunt.james.hierarchyexample;
 import java.util.ArrayList;
 import java.util.List;
 
-import hunt.james.hierarchyview.today.HierarchyDataHelper;
+import hunt.james.hierarchyview.HierarchyDataHelper;
 
 /**
  * Created by James on 7/29/2017.

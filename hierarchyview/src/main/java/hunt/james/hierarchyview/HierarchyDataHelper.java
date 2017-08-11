@@ -1,4 +1,4 @@
-package hunt.james.hierarchyview.today;
+package hunt.james.hierarchyview;
 
 import java.util.List;
 

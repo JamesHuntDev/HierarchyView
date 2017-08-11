@@ -4,10 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import hunt.james.hierarchyview.today.DepthLevelFormat;
-import hunt.james.hierarchyview.today.HierarchyData;
-import hunt.james.hierarchyview.today.HierarchyListener;
-import hunt.james.hierarchyview.today.HierarchyView;
+import hunt.james.hierarchyview.DepthLevelFormat;
+import hunt.james.hierarchyview.HierarchyData;
+import hunt.james.hierarchyview.HierarchyListener;
+import hunt.james.hierarchyview.HierarchyView;
 
 
 public class MainActivity extends AppCompatActivity implements HierarchyListener.Data{

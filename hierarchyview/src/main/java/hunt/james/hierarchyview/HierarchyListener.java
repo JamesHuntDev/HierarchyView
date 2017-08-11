@@ -1,4 +1,4 @@
-package hunt.james.hierarchyview.today;
+package hunt.james.hierarchyview;
 
 /**
  * Created by James on 7/29/2017.

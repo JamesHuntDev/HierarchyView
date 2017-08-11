@@ -14,16 +14,11 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import hunt.james.hierarchyview.today.HierarchyData;
-import hunt.james.hierarchyview.today.HierarchyDataHelper;
-import hunt.james.hierarchyview.today.HierarchyListener;
-import hunt.james.hierarchyview.today.Presenter;
-
 /**
  * Created by James on 6/28/2017.
  */
 
-public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContract.View, View.OnClickListener, PreComputedHeight {
+class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContract.View, View.OnClickListener, PreComputedHeight {
 
     private int tick = 0;
     private int maxTicks;
@@ -41,21 +36,21 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
     private HierarchyLayoutContract.Presenter presenter;
     private HierarchyListener.Scroll scrollListener;
 
-    public HierarchyLinearLayout(Context context, HierarchyListener.Scroll scollListener) {
+    HierarchyLinearLayout(Context context, HierarchyListener.Scroll scollListener) {
         super(context);
         setOrientation(VERTICAL);
         views = new ArrayList<>();
         this.scrollListener = scollListener;
     }
 
-    public void setHierarchyData(HierarchyData hierarchyData) {
+    void setHierarchyData(HierarchyData hierarchyData) {
         if (HierarchyLinearLayout.hierarchyData == null) {
             HierarchyLinearLayout.hierarchyData = hierarchyData;
             setData(hierarchyData.getData(), 0);
         }
     }
 
-    public void setData(HierarchyDataHelper.Data data, int depthLevel) {
+    void setData(HierarchyDataHelper.Data data, int depthLevel) {
 
         this.depthLevel = depthLevel;
 
@@ -68,11 +63,6 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
 
         presenter = new Presenter(data, HierarchyLinearLayout.hierarchyData.getFormat(depthLevel), depthLevel, this);
 
-    }
-
-    @Override
-    public HierarchyListener.Scroll getScrollListener() {
-        return scrollListener;
     }
 
     @Override
@@ -141,7 +131,7 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
         return tempHeight;
     }
 
-    public int getCurrentHeight() {
+    private int getCurrentHeight() {
         return currentHeight;
     }
 
@@ -231,7 +221,7 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
         }
     }
 
-    public int getHeightOfClick() {
+    private int getHeightOfClick() {
 
         int height = 0;
 
@@ -249,7 +239,7 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
     }
 
 
-    public void removeOtherSubLayouts(int keepIndex) {
+    private void removeOtherSubLayouts(int keepIndex) {
 
         for (int i = 0; i < views.size(); i++) {
             if (views.get(i) instanceof HierarchyLinearLayout) {
@@ -265,14 +255,14 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
         }
     }
 
-    public void setShrinking(int index) {
+    private void setShrinking(int index) {
         closingIndex = index;
         shrinking = true;
         tick = maxTicks;
         handlerRequestLayout();
     }
 
-    public void removeAllChildViews() {
+    private void removeAllChildViews() {
         removeAllViews();
         views.clear();
 
@@ -292,7 +282,7 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
 
     }
 
-    public void handlerRequestLayout() {
+    private void handlerRequestLayout() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

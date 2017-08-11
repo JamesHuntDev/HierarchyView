@@ -1,13 +1,10 @@
-package hunt.james.hierarchyview.today;
-
-import hunt.james.hierarchyview.HierarchyLayoutContract;
-import hunt.james.hierarchyview.HierarchyLinearLayout;
+package hunt.james.hierarchyview;
 
 /**
  * Created by James on 7/29/2017.
  */
 
-public class Presenter implements HierarchyLayoutContract.Presenter {
+class Presenter implements HierarchyLayoutContract.Presenter {
 
     private DepthLevelFormat format;
     private HierarchyDataHelper.Data data;
@@ -15,7 +12,7 @@ public class Presenter implements HierarchyLayoutContract.Presenter {
     private HierarchyLayoutContract.View view;
     private int indexClicked;
 
-    public Presenter(HierarchyDataHelper.Data data, DepthLevelFormat format, int depthLevel, HierarchyLayoutContract.View view) {
+    Presenter(HierarchyDataHelper.Data data, DepthLevelFormat format, int depthLevel, HierarchyLayoutContract.View view) {
         this.format = format;
         this.data = data;
         this.depthLevel = depthLevel;
@@ -55,6 +52,7 @@ public class Presenter implements HierarchyLayoutContract.Presenter {
         indexClicked = index;
     }
 
+    @Override
     public int getIndexClicked() {
         return indexClicked;
     }

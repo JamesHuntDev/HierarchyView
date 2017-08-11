@@ -11,7 +11,7 @@ import android.view.Gravity;
  * Created by James on 6/28/2017.
  */
 
-public class HierarchyTextView extends AppCompatTextView implements PreComputedHeight {
+class HierarchyTextView extends AppCompatTextView implements PreComputedHeight {
 
     //Paint paint;
     private int hierarchyDepthLevel;
@@ -20,14 +20,14 @@ public class HierarchyTextView extends AppCompatTextView implements PreComputedH
     private Rect rect;
     private int lines = 0;
 
-    public HierarchyTextView(Context context) {
+    HierarchyTextView(Context context) {
         super(context);
         //paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         setGravity(Gravity.CENTER_VERTICAL);
         rect = new Rect();
     }
 
-    public void setHierarchyDepthLevel(int hierarchyDepthLevel) {
+    void setHierarchyDepthLevel(int hierarchyDepthLevel) {
         this.hierarchyDepthLevel = hierarchyDepthLevel;
         setPadding((hierarchyDepthLevel + 1) * padding, 0, padding, 0);
     }
@@ -42,7 +42,7 @@ public class HierarchyTextView extends AppCompatTextView implements PreComputedH
         return preComputedHeight;
     }
 
-    public void setPreComputedHeight(int screenWidth) {
+    void setPreComputedHeight(int screenWidth) {
 
         getPaint().getTextBounds(getText().toString(), 0, getText().length(), rect);
 

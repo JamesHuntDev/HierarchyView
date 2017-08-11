@@ -1,12 +1,10 @@
-package hunt.james.hierarchyview.today;
+package hunt.james.hierarchyview;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
 import java.util.HashSet;
-
-import hunt.james.hierarchyview.HierarchyLinearLayout;
 
 /**
  * Created by James on 7/29/2017.
@@ -77,7 +75,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         addView(hierarchyLinearLayout);
     }
 
-    public void scrollAndStayInPlace() {
+    private void scrollAndStayInPlace() {
 
         if (initialScrollY == 0) {
             initialScrollY = getScrollY();

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "hunt.james.hierarchyexample"
+        applicationId "me.jameshunt.hierarchyexample"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1

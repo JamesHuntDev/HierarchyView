@@ -36,10 +36,10 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
     private int initialScrollY;
 
 
-    private int previousFrameExpandHeight;
-    /*private int collapseHeightWhenStoppedScrolling;
-    private int scrollYWhenStoppedScrolling;*/
-    private boolean scrollWithoutExpand = false;
+    private int previousFrameExpandHeight;  //expand up then down
+
+
+    private boolean scrollWithoutExpand = false; //collapse normal
 
     private int clickY; //the y value of the element that was clicked
     private int previousClickY;
@@ -47,7 +47,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
 
 
-    private int clickedViewHeight;
+    private int clickedViewHeight; //height of view that was clicked
 
 
     private HashSet<Integer> active;
@@ -122,31 +122,21 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     private void collapseNormal() {
 
-        int left = clickY - collapseStartHeight + collapseCurrentHeight;
+        int expandClickPosition = clickY - collapseStartHeight + collapseCurrentHeight;
 
         if (active.contains(IS_EXPANDING) && clickY > previousClickY) {
 
             scrollWithoutExpand = true;
 
+            if (expandClickPosition <= getScrollY() && collapseStartHeight != 0) {
 
-
-            int right = getScrollY();
-
-            //int position = scrollYWhenStoppedScrolling - (collapseHeightWhenStoppedScrolling - collapseCurrentHeight);
-
-            int min = Math.min(expandStopHeight, getHeight());
-            min = Math.min(min, expandCurrentHeight);
-
-            if (left <= right && collapseStartHeight != 0) {
-
-
-                scrollTo(0, left);
+                scrollTo(0, expandClickPosition);
 
             }
 
         } else if (!active.contains(IS_EXPANDING)) {
             if (scrollWithoutExpand) {
-                scrollTo(0, left);
+                scrollTo(0, expandClickPosition);
             }
         }
     }
@@ -238,9 +228,7 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
             clickedViewHeight = 0;
 
             previousFrameExpandHeight = 0;
-            //collapseHeightWhenStoppedScrolling = 0;
             scrollWithoutExpand = false;
-           // scrollYWhenStoppedScrolling = 0;
 
             state = NONE;
         }

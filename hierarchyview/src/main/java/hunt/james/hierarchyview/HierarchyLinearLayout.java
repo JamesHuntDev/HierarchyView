@@ -235,7 +235,7 @@ public class HierarchyLinearLayout extends LinearLayout implements HierarchyLayo
 
         int height = 0;
 
-        for (int i = 0; i < presenter.getIndexClicked(); i++) {
+        for (int i = 0; i <= presenter.getIndexClicked(); i++) {
             height += views.get(i).getPreComputedHeight(0);
         }
 

@@ -122,12 +122,14 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     private void collapseNormal() {
 
+        int left = clickY - collapseStartHeight + collapseCurrentHeight;
+
         if (active.contains(IS_EXPANDING) && clickY > previousClickY) {
 
             scrollWithoutExpand = true;
 
 
-            int left = clickY - collapseStartHeight + collapseCurrentHeight + clickedViewHeight;
+
             int right = getScrollY();
 
             //int position = scrollYWhenStoppedScrolling - (collapseHeightWhenStoppedScrolling - collapseCurrentHeight);
@@ -135,26 +137,16 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
             int min = Math.min(expandStopHeight, getHeight());
             min = Math.min(min, expandCurrentHeight);
 
-            //if (left < right && left + Math.min(expandStopHeight, getHeight()) + clickedViewHeight <= getScrollY() + getHeight()) {
             if (left <= right && collapseStartHeight != 0) {
 
-                /*if(collapseHeightWhenStoppedScrolling == 0 && scrollYWhenStoppedScrolling == 0) {
-                    collapseHeightWhenStoppedScrolling = collapseCurrentHeight;
-                    scrollYWhenStoppedScrolling = getScrollY();
-                    //position = scrollYWhenStoppedScrolling - (collapseHeightWhenStoppedScrolling - collapseCurrentHeight);
-                }*/
 
-                //scrollTo(0, position);
-                scrollBy(0, left - getScrollY());
-            } /*else {
-                collapseHeightWhenStoppedScrolling = collapseCurrentHeight;
-                scrollYWhenStoppedScrolling = getScrollY();
-            }*/
+                scrollTo(0, left);
+
+            }
 
         } else if (!active.contains(IS_EXPANDING)) {
             if (scrollWithoutExpand) {
-                /*int position = scrollYWhenStoppedScrolling - (collapseHeightWhenStoppedScrolling - collapseCurrentHeight);
-                scrollTo(0, position);*/
+                scrollTo(0, left);
             }
         }
     }

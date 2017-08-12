@@ -18,7 +18,7 @@ public class Category implements HierarchyDataHelper.Data {
         subCategories = new ArrayList<>();
         this.text = text;
 
-        int rand = (int)(Math.random() * 6 + 8);
+        int rand = (int)(Math.random() * 40 + 2);
 
         for(int i = 0; i < rand; i++)
             subCategories.add(new SubCategory("blah: " + i));

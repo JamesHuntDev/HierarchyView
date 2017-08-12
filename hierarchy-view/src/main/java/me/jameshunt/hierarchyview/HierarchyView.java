@@ -124,12 +124,15 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
         if (active.contains(IS_EXPANDING) && clickY > previousClickY) {
 
-            scrollWithoutExpand = true;
+
 
             if (expandClickPosition <= getScrollY() && collapseStartHeight != 0) {
-
+                scrollWithoutExpand = true;
                 scrollTo(0, expandClickPosition);
 
+            } else if(!active.contains(IS_COLLAPSING)) {
+                scrollWithoutExpand = false;
+                scrollBy(0, 55);
             }
 
         } else if (!active.contains(IS_EXPANDING)) {
@@ -150,6 +153,13 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
         boolean goUp = false;
         if (clickY + expandCurrentHeight >= getScrollY() + expandStopHeight + clickedViewHeight ) {
+
+        /*int minHeightOfExpandOrScreen = Math.min(expandStopHeight, getHeight());
+
+        if (clickY + expandCurrentHeight >= getScrollY() + minHeightOfExpandOrScreen) {
+
+        }*/
+
             goUp = true;
         }
 

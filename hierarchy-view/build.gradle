@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/JamesHuntDev/HierarchyView'
     gitUrl = 'https://github.com/JamesHuntDev/HierarchyView.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'JamesHuntDev'
     developerName = 'James Hunt'
@@ -26,7 +26,7 @@ ext {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 19

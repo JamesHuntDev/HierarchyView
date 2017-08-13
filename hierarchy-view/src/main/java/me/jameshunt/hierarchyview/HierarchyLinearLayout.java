@@ -182,6 +182,9 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
     @Override
     public void onClick(View view) {
 
+        if(scrollListener.getState() != 0) //0 == HierarchyView.NONE
+            return;
+
         if (openingIndex == views.size())
             openingIndex--;
 

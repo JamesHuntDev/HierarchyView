@@ -21,5 +21,7 @@ public interface HierarchyListener {
 
         void setClickY(int y);
         void setHeightOfClickedView(int height);
+
+        int getState();
     }
 }

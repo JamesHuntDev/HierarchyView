@@ -268,4 +268,9 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
             state = NONE;
         }
     }
+
+    @Override
+    public int getState() {
+        return state;
+    }
 }

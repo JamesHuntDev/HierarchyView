@@ -11,6 +11,9 @@ public interface HierarchyListener {
     }
 
     interface Scroll {
+
+        HierarchyData getHierarchyData();
+
         void startExpand(int fullHeight);
         void stopExpand();
         void setExpandCurrentHeight(int height);

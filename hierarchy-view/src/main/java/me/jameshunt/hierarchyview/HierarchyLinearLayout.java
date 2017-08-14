@@ -27,7 +27,6 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
     private int openingIndex = -1;
     private boolean shrinking = false;
     private static int screenWidth;
-    private static HierarchyData hierarchyData;
 
     int currentHeight;
     int depthLevel = 0;
@@ -43,13 +42,6 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
         this.scrollListener = scollListener;
     }
 
-    void setHierarchyData(HierarchyData hierarchyData) {
-        if (HierarchyLinearLayout.hierarchyData == null) {
-            HierarchyLinearLayout.hierarchyData = hierarchyData;
-            setData(hierarchyData.getData(), 0);
-        }
-    }
-
     void setData(HierarchyDataHelper.Data data, int depthLevel) {
 
         this.depthLevel = depthLevel;
@@ -61,13 +53,16 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
             screenWidth = size.x;
         }
 
-        presenter = new Presenter(data, HierarchyLinearLayout.hierarchyData.getFormat(depthLevel), depthLevel, this);
+        presenter = new Presenter(data, scrollListener.getHierarchyData().getFormat(depthLevel), depthLevel, this);
 
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
+        if(presenter == null) {
+            setData(scrollListener.getHierarchyData().getData(),0);
+        }
         int fullHeight = getPreComputedHeight(widthMeasureSpec);
         currentHeight = (fullHeight * tick) / maxTicks;
 

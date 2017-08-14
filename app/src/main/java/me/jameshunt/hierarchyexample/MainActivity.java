@@ -6,6 +6,7 @@ import android.util.Log;
 
 import me.jameshunt.hierarchyview.DepthLevelFormat;
 import me.jameshunt.hierarchyview.HierarchyData;
+import me.jameshunt.hierarchyview.HierarchyDataHelper;
 import me.jameshunt.hierarchyview.HierarchyListener;
 import me.jameshunt.hierarchyview.HierarchyView;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements HierarchyListener
     }
 
     @Override
-    public void hierarchyDataSelected(String data) {
-        Log.d("clicked",data);
+    public void hierarchyDataSelected(HierarchyDataHelper.Data data) {
+        Log.d("clicked",data.getText());
     }
 }

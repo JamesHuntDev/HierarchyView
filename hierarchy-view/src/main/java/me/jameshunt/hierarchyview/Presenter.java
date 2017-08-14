@@ -42,8 +42,7 @@ class Presenter implements HierarchyLayoutContract.Presenter {
         if (subData.getHierarchyData() != null) {
             view.addInnerLayout(subData, x);
         } else {
-            dataListener.hierarchyDataSelected(data.getHierarchyData().get(x).getText());
-            //((HierarchyListener.Data) ((HierarchyLinearLayout) view).getContext()).hierarchyDataSelected(data.getHierarchyData().get(x).getText());
+            dataListener.hierarchyDataSelected(data.getHierarchyData().get(x));
         }
     }
 

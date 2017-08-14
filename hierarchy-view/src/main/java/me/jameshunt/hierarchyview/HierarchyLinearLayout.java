@@ -35,11 +35,11 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
     private HierarchyLayoutContract.Presenter presenter;
     private HierarchyListener.Scroll scrollListener;
 
-    HierarchyLinearLayout(Context context, HierarchyListener.Scroll scollListener) {
+    HierarchyLinearLayout(Context context, HierarchyListener.Scroll scrollListener) {
         super(context);
         setOrientation(VERTICAL);
         views = new ArrayList<>();
-        this.scrollListener = scollListener;
+        this.scrollListener = scrollListener;
     }
 
     void setData(HierarchyDataHelper.Data data, int depthLevel) {

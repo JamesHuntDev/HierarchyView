@@ -68,11 +68,15 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         init();
     }
 
+    @Override
+    public HierarchyData getHierarchyData() {
+        return hierarchyData;
+    }
+
     private void init() {
         active = new HashSet<>();
 
         HierarchyLinearLayout hierarchyLinearLayout = new HierarchyLinearLayout(getContext(), this);
-        hierarchyLinearLayout.setHierarchyData(hierarchyData);
         addView(hierarchyLinearLayout);
     }
 

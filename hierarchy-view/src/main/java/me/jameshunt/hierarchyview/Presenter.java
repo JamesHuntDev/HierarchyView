@@ -12,11 +12,15 @@ class Presenter implements HierarchyLayoutContract.Presenter {
     private HierarchyLayoutContract.View view;
     private int indexClicked;
 
-    Presenter(HierarchyDataHelper.Data data, DepthLevelFormat format, int depthLevel, HierarchyLayoutContract.View view) {
+    private HierarchyListener.Data dataListener;
+
+    Presenter(HierarchyDataHelper.Data data, DepthLevelFormat format, int depthLevel, HierarchyLayoutContract.View view, HierarchyListener.Data dataListener) {
         this.format = format;
         this.data = data;
         this.depthLevel = depthLevel;
         this.view = view;
+
+        this.dataListener = dataListener;
 
         displayText();
     }
@@ -38,7 +42,8 @@ class Presenter implements HierarchyLayoutContract.Presenter {
         if (subData.getHierarchyData() != null) {
             view.addInnerLayout(subData, x);
         } else {
-            ((HierarchyListener.Data) ((HierarchyLinearLayout) view).getContext()).hierarchyDataSelected(data.getHierarchyData().get(x).getText());
+            dataListener.hierarchyDataSelected(data.getHierarchyData().get(x).getText());
+            //((HierarchyListener.Data) ((HierarchyLinearLayout) view).getContext()).hierarchyDataSelected(data.getHierarchyData().get(x).getText());
         }
     }
 

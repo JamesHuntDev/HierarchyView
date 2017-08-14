@@ -13,6 +13,7 @@ import java.util.HashSet;
 public class HierarchyView extends ScrollView implements HierarchyListener.Scroll {
 
     private HierarchyData hierarchyData;
+    private HierarchyListener.Data dataListener;
 
     //active
     private final int IS_EXPANDING = 1;
@@ -63,14 +64,20 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         super(context, attrs, defStyleAttr);
     }
 
-    public void setHierarchyData(HierarchyData hierarchyData) {
+    public void setHierarchyData(HierarchyData hierarchyData, HierarchyListener.Data dataListener) {
         this.hierarchyData = hierarchyData;
+        this.dataListener = dataListener;
         init();
     }
 
     @Override
     public HierarchyData getHierarchyData() {
         return hierarchyData;
+    }
+
+    @Override
+    public HierarchyListener.Data getDataListener() {
+        return dataListener;
     }
 
     private void init() {

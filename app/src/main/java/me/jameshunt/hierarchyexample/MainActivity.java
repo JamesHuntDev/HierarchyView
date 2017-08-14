@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements HierarchyListener
 
 
         HierarchyView hierarchyView = new HierarchyView(this);
-        hierarchyView.setHierarchyData(hierarchyData);
+        hierarchyView.setHierarchyData(hierarchyData, this);
 
         setContentView(hierarchyView);
 

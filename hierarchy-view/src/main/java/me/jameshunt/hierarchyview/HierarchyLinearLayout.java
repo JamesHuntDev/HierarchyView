@@ -53,7 +53,7 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
             screenWidth = size.x;
         }
 
-        presenter = new Presenter(data, scrollListener.getHierarchyData().getFormat(depthLevel), depthLevel, this);
+        presenter = new Presenter(data, scrollListener.getHierarchyData().getFormat(depthLevel), depthLevel, this, scrollListener.getDataListener());
 
     }
 

@@ -111,7 +111,7 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
         int tempHeight = 0;
 
         for (int i = 0; i < getChildCount(); i++) {
-            //try {
+            try {
                 getChildAt(i).measure(widthMeasureSpec, views.get(i).getPreComputedHeight(widthMeasureSpec));
 
                 if (getChildAt(i) instanceof HierarchyTextView)

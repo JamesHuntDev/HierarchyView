@@ -1,4 +1,4 @@
-package me.jameshunt.hierarchyexample;
+package me.jameshunt.hierarchyexample.nested;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

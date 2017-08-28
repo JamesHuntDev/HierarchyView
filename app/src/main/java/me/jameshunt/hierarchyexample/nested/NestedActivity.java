@@ -1,4 +1,4 @@
-package me.jameshunt.hierarchyexample;
+package me.jameshunt.hierarchyexample.nested;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jameshunt.hierarchyexample.R;
 import me.jameshunt.hierarchyview.DepthLevelFormat;
 import me.jameshunt.hierarchyview.HierarchyData;
 import me.jameshunt.hierarchyview.HierarchyDataHelper;

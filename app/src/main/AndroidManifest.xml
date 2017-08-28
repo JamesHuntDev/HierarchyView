@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="me.jameshunt.hierarchyexample.MainActivity" />
-        <activity android:name="me.jameshunt.hierarchyexample.NestedActivity" />
+        <activity android:name="me.jameshunt.hierarchyexample.common.CommonActivity" />
+        <activity android:name="me.jameshunt.hierarchyexample.nested.NestedActivity" />
     </application>
 
 </manifest>

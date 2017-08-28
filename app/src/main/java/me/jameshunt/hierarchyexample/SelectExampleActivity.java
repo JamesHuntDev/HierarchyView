@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import me.jameshunt.hierarchyview.HierarchyDataHelper;
-import me.jameshunt.hierarchyview.HierarchyListener;
+import me.jameshunt.hierarchyexample.common.CommonActivity;
+import me.jameshunt.hierarchyexample.nested.NestedActivity;
 
 /**
  * Created by James on 8/28/2017.
@@ -24,7 +24,7 @@ public class SelectExampleActivity extends AppCompatActivity {
         findViewById(R.id.common).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SelectExampleActivity.this, MainActivity.class);
+                Intent intent = new Intent(SelectExampleActivity.this, CommonActivity.class);
                 startActivity(intent);
             }
         });

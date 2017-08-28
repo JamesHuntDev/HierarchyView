@@ -27,7 +27,6 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
     private int openingIndex = -1;
     private boolean shrinking = false;
     private static int screenWidth;
-    private static HierarchyData hierarchyData;
 
     int currentHeight;
     int depthLevel = 0;
@@ -36,18 +35,13 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
     private HierarchyLayoutContract.Presenter presenter;
     private HierarchyListener.Scroll scrollListener;
 
-    HierarchyLinearLayout(Context context, HierarchyListener.Scroll scollListener) {
+    HierarchyLinearLayout(Context context, HierarchyListener.Scroll scrollListener) {
         super(context);
         setOrientation(VERTICAL);
         views = new ArrayList<>();
-        this.scrollListener = scollListener;
-    }
+        this.scrollListener = scrollListener;
 
-    void setHierarchyData(HierarchyData hierarchyData) {
-        if (HierarchyLinearLayout.hierarchyData == null) {
-            HierarchyLinearLayout.hierarchyData = hierarchyData;
-            setData(hierarchyData.getData(), 0);
-        }
+        setData(scrollListener.getHierarchyData().getData(), 0);
     }
 
     void setData(HierarchyDataHelper.Data data, int depthLevel) {
@@ -61,8 +55,12 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
             screenWidth = size.x;
         }
 
-        presenter = new Presenter(data, HierarchyLinearLayout.hierarchyData.getFormat(depthLevel), depthLevel, this);
+        presenter = new Presenter(data, scrollListener.getHierarchyData().getFormat(depthLevel), depthLevel, this);
 
+    }
+
+    public HierarchyListener.Data getExternalListener() {
+        return scrollListener.getExternalListener();
     }
 
     @Override

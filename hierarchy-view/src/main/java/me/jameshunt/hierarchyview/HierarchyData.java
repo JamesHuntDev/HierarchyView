@@ -17,19 +17,13 @@ public class HierarchyData {
         this.data = data;
     }
 
-    public HierarchyData(final List list) throws HierarchyViewIncompatibleTypeException{
+    public HierarchyData(final List<? extends HierarchyDataHelper.Data> list) {
 
         formats = new ArrayList<>();
         data = new HierarchyDataHelper.Data() {
             @Override
-            public List<HierarchyDataHelper.Data> getHierarchyData() {
-                try {
-                    return HierarchyTransform.fromList(list);
-                } catch (HierarchyViewIncompatibleTypeException e) {
-                    e.printStackTrace();
-                }
-
-                return null;
+            public List<? extends HierarchyDataHelper.Data> getHierarchyData() {
+                return list;
             }
 
             @Override

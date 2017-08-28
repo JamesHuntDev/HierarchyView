@@ -8,6 +8,7 @@ interface HierarchyLayoutContract {
     interface View {
         void displayText(String[] text, int hierarchyDepthLevel, int color, int textSize);
         void addInnerLayout(HierarchyDataHelper.Data data, int i);
+        HierarchyListener.Data getExternalListener();
     }
 
     interface Presenter {

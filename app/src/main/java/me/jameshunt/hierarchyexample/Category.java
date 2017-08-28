@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import me.jameshunt.hierarchyview.HierarchyTransform;
 import me.jameshunt.hierarchyview.HierarchyDataHelper;
-import me.jameshunt.hierarchyview.HierarchyViewIncompatibleTypeException;
 
 /**
  * Created by James on 8/20/2017.
@@ -40,14 +38,8 @@ public class Category implements HierarchyDataHelper.Data{
 
 
     @Override
-    public List<HierarchyDataHelper.Data> getHierarchyData() {
-        try {
-            return HierarchyTransform.fromList(children);
-        } catch (HierarchyViewIncompatibleTypeException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public List<? extends HierarchyDataHelper.Data> getHierarchyData() {
+        return children;
     }
 
     @Override

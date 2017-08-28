@@ -9,7 +9,7 @@ import java.util.List;
 public interface HierarchyDataHelper {
 
     interface Data {
-        List<Data> getHierarchyData();
+        List<? extends Data> getHierarchyData();
         String getText();
     }
 

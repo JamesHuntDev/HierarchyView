@@ -14,6 +14,8 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
     private HierarchyData hierarchyData;
 
+    private HierarchyListener.Data listener;
+
     //active
     private final int IS_EXPANDING = 1;
     private final int IS_COLLAPSING = 2;
@@ -62,8 +64,9 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         super(context, attrs, defStyleAttr);
     }
 
-    public void setHierarchyData(HierarchyData hierarchyData) {
+    public void setHierarchyData(HierarchyData hierarchyData, HierarchyListener.Data listener) {
         this.hierarchyData = hierarchyData;
+        this.listener = listener;
         init();
     }
 
@@ -71,8 +74,17 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         active = new HashSet<>();
 
         HierarchyLinearLayout hierarchyLinearLayout = new HierarchyLinearLayout(getContext(), this);
-        hierarchyLinearLayout.setHierarchyData(hierarchyData);
         addView(hierarchyLinearLayout);
+    }
+
+    @Override
+    public HierarchyListener.Data getExternalListener() {
+        return listener;
+    }
+
+    @Override
+    public HierarchyData getHierarchyData() {
+        return hierarchyData;
     }
 
     private void scrollAndStayInPlace() {

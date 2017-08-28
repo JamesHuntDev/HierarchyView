@@ -1,4 +1,4 @@
-package me.jameshunt.hierarchyexample;
+package me.jameshunt.hierarchyexample.old;
 
 import java.util.ArrayList;
 import java.util.List;

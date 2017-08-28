@@ -4,6 +4,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import me.jameshunt.hierarchyexample.old.Data;
 import me.jameshunt.hierarchyview.DepthLevelFormat;
 import me.jameshunt.hierarchyview.HierarchyData;
 import me.jameshunt.hierarchyview.HierarchyDataHelper;
@@ -11,12 +21,11 @@ import me.jameshunt.hierarchyview.HierarchyListener;
 import me.jameshunt.hierarchyview.HierarchyView;
 
 
-public class MainActivity extends AppCompatActivity implements HierarchyListener.Data{
+public class MainActivity extends AppCompatActivity implements HierarchyListener.Data {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
 
         Data data = new Data();
 
@@ -31,10 +40,13 @@ public class MainActivity extends AppCompatActivity implements HierarchyListener
 
         setContentView(hierarchyView);
 
+
+
     }
+
 
     @Override
     public void hierarchyDataSelected(HierarchyDataHelper.Data data) {
-        Log.d("clicked",data.getText());
+
     }
 }

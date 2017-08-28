@@ -40,6 +40,8 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
         setOrientation(VERTICAL);
         views = new ArrayList<>();
         this.scrollListener = scrollListener;
+
+        setData(scrollListener.getHierarchyData().getData(), 0);
     }
 
     void setData(HierarchyDataHelper.Data data, int depthLevel) {
@@ -53,16 +55,17 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
             screenWidth = size.x;
         }
 
-        presenter = new Presenter(data, scrollListener.getHierarchyData().getFormat(depthLevel), depthLevel, this, scrollListener.getDataListener());
+        presenter = new Presenter(data, scrollListener.getHierarchyData().getFormat(depthLevel), depthLevel, this);
 
+    }
+
+    public HierarchyListener.Data getExternalListener() {
+        return scrollListener.getExternalListener();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        if(presenter == null) {
-            setData(scrollListener.getHierarchyData().getData(),0);
-        }
         int fullHeight = getPreComputedHeight(widthMeasureSpec);
         currentHeight = (fullHeight * tick) / maxTicks;
 
@@ -117,10 +120,9 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
                     HierarchyLinearLayout smoothLinearLayout = (HierarchyLinearLayout) views.get(i);
                     tempHeight += smoothLinearLayout.getCurrentHeight();
                 }
-            /*} catch (Exception e) {
-                Log.d("ugh", "it happened");
-                Log.e("ugh", e.getMessage());
-            }*/
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 

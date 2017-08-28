@@ -1,0 +1,188 @@
+[
+  {
+    "name": "Arts & Photography",
+    "children": [
+      {
+        "name": "Architecture",
+        "children": [
+          {
+            "name": "Rome or something",
+            "children": []
+          },
+          {
+            "name": "duuuummmy data",
+            "children": []
+          },
+          {
+            "name": "Manga",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Graphic Design",
+        "children": [
+          {
+            "name": "photoshop",
+            "children": []
+          },
+          {
+            "name": "Sketch",
+            "children": []
+          },
+          {
+            "name": "colored pencils",
+            "children": [
+              {
+                "name": "red",
+                "children": []
+              },
+              {
+                "name": "green",
+                "children": []
+              },
+              {
+                "name": "blue",
+                "children": []
+              },
+              {
+                "name": "yellow",
+                "children": []
+              },
+              {
+                "name": "white",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Music",
+        "children": [
+          {
+            "name": "Best",
+            "children": [
+              {
+                "name": "Illenium",
+                "children": []
+              },
+              {
+                "name": "Said The Sky",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "Instruments & Performers",
+            "children": [
+              {
+                "name": "Brass",
+                "children": []
+              },
+              {
+                "name": "Woodwinds",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Comics & Graphic Novels",
+    "children": [
+      {
+        "name": "Comic Strips",
+        "children": []
+      },
+      {
+        "name": "Graphic Novels",
+        "children": []
+      },
+      {
+        "name": "Manga",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Comic Strips",
+    "children": [
+      {
+        "name": "bilbert",
+        "children": []
+      },
+      {
+        "name": "calvin and hobbes",
+        "children": []
+      },
+      {
+        "name": "XKCD",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Mystery, Thriller and Suspense",
+    "children": [
+      {
+        "name": "Mystery",
+        "children": [
+          {
+            "name": "Hard Boiled",
+            "children": []
+          },
+          {
+            "name": "Police Procedurals",
+            "children": [
+              {
+                "name": "British Detectives",
+                "children": []
+              },
+              {
+                "name": "FBI Agents",
+                "children": []
+              },
+              {
+                "name": "Police Officers",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Nonfiction",
+    "children": [
+      {
+        "name": "Biographies and Memoirs",
+        "children": []
+      },
+      {
+        "name": "Business & Investing",
+        "children": []
+      },
+      {
+        "name": "Computers & Technology",
+        "children": [
+          {
+            "name": "Databases",
+            "children": []
+          },
+          {
+            "name": "Hardware",
+            "children": []
+          },
+          {
+            "name": "Software",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

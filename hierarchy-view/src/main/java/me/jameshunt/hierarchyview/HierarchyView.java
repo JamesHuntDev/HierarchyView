@@ -13,7 +13,8 @@ import java.util.HashSet;
 public class HierarchyView extends ScrollView implements HierarchyListener.Scroll {
 
     private HierarchyData hierarchyData;
-    private HierarchyListener.Data dataListener;
+
+    private HierarchyListener.Data listener;
 
     //active
     private final int IS_EXPANDING = 1;
@@ -64,20 +65,10 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
         super(context, attrs, defStyleAttr);
     }
 
-    public void setHierarchyData(HierarchyData hierarchyData, HierarchyListener.Data dataListener) {
+    public void setHierarchyData(HierarchyData hierarchyData, HierarchyListener.Data listener) {
         this.hierarchyData = hierarchyData;
-        this.dataListener = dataListener;
+        this.listener = listener;
         init();
-    }
-
-    @Override
-    public HierarchyData getHierarchyData() {
-        return hierarchyData;
-    }
-
-    @Override
-    public HierarchyListener.Data getDataListener() {
-        return dataListener;
     }
 
     private void init() {
@@ -85,6 +76,16 @@ public class HierarchyView extends ScrollView implements HierarchyListener.Scrol
 
         HierarchyLinearLayout hierarchyLinearLayout = new HierarchyLinearLayout(getContext(), this);
         addView(hierarchyLinearLayout);
+    }
+
+    @Override
+    public HierarchyListener.Data getExternalListener() {
+        return listener;
+    }
+
+    @Override
+    public HierarchyData getHierarchyData() {
+        return hierarchyData;
     }
 
     private void scrollAndStayInPlace() {

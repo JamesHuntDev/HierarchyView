@@ -1,36 +1,49 @@
 package me.jameshunt.hierarchyexample;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import me.jameshunt.hierarchyview.HierarchyDataHelper;
 
 /**
- * Created by James on 7/29/2017.
+ * Created by James on 8/20/2017.
  */
 
-public class Category implements HierarchyDataHelper.Data {
+public class Category implements HierarchyDataHelper.Data{
 
-    List<HierarchyDataHelper.Data> subCategories;
-    String text;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("children")
+    @Expose
+    private List<Category> children = null;
 
-    public Category(String text) {
-        subCategories = new ArrayList<>();
-        this.text = text;
-
-        int rand = (int)(Math.random() * 40 + 2);
-
-        for(int i = 0; i < rand; i++)
-            subCategories.add(new SubCategory("blah: " + i));
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
+    }
+
+
     @Override
-    public List<HierarchyDataHelper.Data> getHierarchyData() {
-        return subCategories;
+    public List<? extends HierarchyDataHelper.Data> getHierarchyData() {
+        return children;
     }
 
     @Override
     public String getText() {
-        return text;
+        return name;
     }
 }

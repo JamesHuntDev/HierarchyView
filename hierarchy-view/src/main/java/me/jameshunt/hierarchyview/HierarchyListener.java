@@ -6,15 +6,11 @@ package me.jameshunt.hierarchyview;
 
 public interface HierarchyListener {
 
-    interface Data {
-        void hierarchyDataSelected(HierarchyDataHelper.Data data);
+    interface Data<T extends HierarchyDataHelper.Data> {
+        void hierarchyDataSelected(T data);
     }
 
     interface Scroll {
-
-        HierarchyData getHierarchyData();
-        HierarchyListener.Data getDataListener();
-
         void startExpand(int fullHeight);
         void stopExpand();
         void setExpandCurrentHeight(int height);
@@ -25,6 +21,10 @@ public interface HierarchyListener {
 
         void setClickY(int y);
         void setHeightOfClickedView(int height);
+
+
+        HierarchyListener.Data getExternalListener();
+        HierarchyData getHierarchyData();
 
         int getState();
     }

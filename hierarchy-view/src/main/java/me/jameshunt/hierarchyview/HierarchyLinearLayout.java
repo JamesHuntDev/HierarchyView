@@ -69,7 +69,12 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         int fullHeight = getPreComputedHeight(widthMeasureSpec);
-        currentHeight = (fullHeight * tick) / maxTicks;
+
+        try {
+            currentHeight = (fullHeight * tick) / maxTicks;
+        } catch (ArithmeticException e) {
+            currentHeight = 0;
+        }
 
         if (presenter.getFullSizeInitially()) {
             setMeasuredDimension(widthMeasureSpec, fullHeight);
@@ -123,7 +128,7 @@ class HierarchyLinearLayout extends LinearLayout implements HierarchyLayoutContr
                     tempHeight += smoothLinearLayout.getCurrentHeight();
                 }
             } catch (Exception e) {
-                Log.d("ugh", "it happened");
+                e.printStackTrace();
             }
 
         }

@@ -9,13 +9,34 @@ import java.util.List;
 
 public class HierarchyData {
 
-    List<DepthLevelFormat> formats;
-    HierarchyDataHelper.Data data;
+    private List<DepthLevelFormat> formats;
+    private HierarchyDataHelper.Data data;
 
-    public HierarchyData(HierarchyDataHelper.Data data)
-    {
+    public HierarchyData(HierarchyDataHelper.Data data) {
         formats = new ArrayList<>();
         this.data = data;
+    }
+
+    public HierarchyData(final List list) throws HierarchyViewIncompatibleTypeException{
+
+        formats = new ArrayList<>();
+        data = new HierarchyDataHelper.Data() {
+            @Override
+            public List<HierarchyDataHelper.Data> getHierarchyData() {
+                try {
+                    return HierarchyTransform.fromList(list);
+                } catch (HierarchyViewIncompatibleTypeException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            public String getText() {
+                return null;
+            }
+        };
     }
 
     public void addFormatter(DepthLevelFormat format) {
@@ -23,11 +44,11 @@ public class HierarchyData {
     }
 
 
-    public DepthLevelFormat getFormat(int depthLevel) {
-        if(formats.size()>depthLevel)
+    DepthLevelFormat getFormat(int depthLevel) {
+        if (formats.size() > depthLevel)
             return formats.get(depthLevel);
         else
-            return formats.get(formats.size()-1);
+            return formats.get(formats.size() - 1);
     }
 
     public HierarchyDataHelper.Data getData() {
